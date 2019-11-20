@@ -44,7 +44,7 @@ export class ClienteConsultaComponent implements OnInit {
 
     doFilter(filterBy: string): ClienteViewModel[] {
         filterBy = filterBy.toLocaleLowerCase();
-        return this.clientes.filter((cliente: ClienteViewModel) =>
+        return this.clientes.filter(cliente =>
             cliente.nombreCompleto.toLocaleLowerCase().indexOf(filterBy) !== -1
             ||
             cliente.telefono.toLocaleLowerCase().indexOf(filterBy) !== -1
@@ -53,7 +53,7 @@ export class ClienteConsultaComponent implements OnInit {
 }
 
 export class ClienteViewModel {
-    identidad: number;
+    identificacion: string;
     email: string;
     telefono: string;
     nombreCompleto: string;

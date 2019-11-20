@@ -36,6 +36,7 @@ export class HandleErrorService {
     }
 
     private mostrarError400(error: any): void {
+        console.error(error);
         let contadorValidaciones: number = 0;
         let mensajeValidaciones: string =
             `Señor(a) usuario(a), se han presentado algunos errores de validación, por favor revíselos y vuelva a realizar la operación.<br/><br/>`;

@@ -9,7 +9,7 @@ namespace NgNetCore.ViewModels
     public class ClienteRegisterViewModel
     {
         [Required]
-        public int ClienteId { get; set; }
+        public string ClienteId { get; set; }
         [Required]
         public DateTime Fecha { get; set; }
         [Required]

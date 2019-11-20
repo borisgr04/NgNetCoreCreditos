@@ -8,7 +8,7 @@ namespace NgNetCore.Models
     public class Credito
     {
         public int Id { get; set; }
-        public int ClienteId { get; set; }
+        public string ClienteId { get; set; }
         public Cliente Cliente { get; set; }
         public DateTime Fecha { get; set; }
         public int NumeroCuotas { get; set; }

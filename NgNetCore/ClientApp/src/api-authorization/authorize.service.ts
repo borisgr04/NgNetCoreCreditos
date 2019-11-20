@@ -30,7 +30,8 @@ export enum AuthenticationResultStatus {
 }
 
 export interface IUser {
-  name: string;
+    name: string;
+    role:any
 }
 
 @Injectable({
@@ -43,9 +44,9 @@ export class AuthorizeService {
   private popUpDisabled = true;
   private userManager: UserManager;
   private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
-
+  
   public isAuthenticated(): Observable<boolean> {
-    return this.getUser().pipe(map(u => !!u));
+    return this.getUser().pipe(map(u => !!u ));
   }
 
   public getUser(): Observable<IUser | null> {
@@ -195,5 +196,24 @@ export class AuthorizeService {
       .pipe(
         mergeMap(() => this.userManager.getUser()),
         map(u => u && u.profile));
-  }
+    }
+
+    //nuevo boris
+   public hasRole(role: string): Observable<boolean> {
+        return from(this.ensureUserManagerInitialized())
+            .pipe(mergeMap(() => from(this.userManager.getUser())),
+                map(user => user && user.profile.role.indexOf(role) >= 0));
+    }
+
+    public isAuthenticatedRole(role: string): Observable<boolean> {
+        return from(this.ensureUserManagerInitialized())
+            .pipe(mergeMap(() => from(this.userManager.getUser())),
+                map(user => user && user.profile.role.indexOf(role) >= 0));
+    }
+    public getUserProfile(): Promise<User>
+    {
+        return this.userManager.getUser();
+    }
+    
+    
 }

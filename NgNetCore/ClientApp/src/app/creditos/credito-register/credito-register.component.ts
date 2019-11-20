@@ -5,6 +5,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteConsultaModalComponent } from '../../clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
 import { ClienteViewModel } from '../../clientes/consulta/cliente-consulta.component';
 import { AlertModalComponent } from '../../@base/modals/alert-modal/alert-modal.component';
+import { ClienteService } from '../../services/cliente.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CreditoRegisterComponent implements OnInit {
 
     constructor(
         private creditoService: CreditoService,
+        private clienteService: ClienteService,
         private formBuilder: FormBuilder,
         private modalService: NgbModal) { }
 
@@ -28,22 +30,44 @@ export class CreditoRegisterComponent implements OnInit {
         this.credito = new CreditoRegisterViewModel();
         let myDate = new Date();
         this.credito.fecha = myDate;
-        this.credito.clienteId = '';
+        this.credito.clienteId = "";
         this.credito.numeroCuotas = 0;
         this.credito.valorCredito = 0;
         this.registerForm = this.formBuilder.group({
             clienteId: [this.credito.clienteId, Validators.required],
             fecha: [this.credito.fecha, Validators.required],
-            numeroCuotas: [this.credito.numeroCuotas, [Validators.required, , Validators.min(2), Validators.max(12)], Validators.pattern("^[0-9]*$")],
-            valorCredito: [this.credito.valorCredito, [Validators.required, Validators.min(100000)], Validators.pattern("^[0-9]*$")],
-            observacion: [this.credito.observacion, Validators.required],
+            numeroCuotas: [this.credito.numeroCuotas, [Validators.required, , Validators.min(2), Validators.max(12), Validators.pattern("^[0-9]*$")]],
+            valorCredito: [this.credito.valorCredito, [Validators.required, Validators.min(100000), Validators.pattern("^[0-9]*$")]],
+            observacion: [this.credito.observacion],
+            clienteNombre: [''],
         });
         
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
-    
+  
+    buscarCliente() {
+        this.clienteService.getByIdentificacion(this.registerForm.value.clienteId).subscribe(cliente => {
+            this.f['clienteId'].setValue(cliente.identificacion);
+            this.f['clienteNombre'].setValue(cliente.nombreCompleto);
+        });
+    }
+
+    //Manejo Modal
+    openModalCliente()
+    {
+        this.modalService.open(ClienteConsultaModalComponent, { size: 'lg' }).result.then((cliente) => this.actualizar(cliente));
+    }
+
+    actualizar(cliente: ClienteViewModel) {
+        
+        this.registerForm.controls['clienteId'].setValue(cliente.identificacion);
+        this.registerForm.controls['clienteNombre'].setValue(cliente.nombreCompleto);
+    }
+    //Fin Manejo Modal
+
+    //Manejo Registrar
     onSubmit() {
         this.submitted = true;
         // stop here if form is invalid
@@ -53,38 +77,28 @@ export class CreditoRegisterComponent implements OnInit {
         this.create();
     }
 
-    create()
-    {
+    create() {
         this.credito = this.registerForm.value;
 
-        this.creditoService.post(this.credito).subscribe(c =>
-        {
-            const messageBox = this.modalService.open(AlertModalComponent)
-            messageBox.componentInstance.title = "Resultado Operación";
-            if (c != null)
+        alert(JSON.stringify(this.credito));
+
+        this.creditoService.post(this.credito).subscribe(c => {
+            if (c != null) {
+                const messageBox = this.modalService.open(AlertModalComponent)
+                messageBox.componentInstance.title = "Resultado Operación";
                 messageBox.componentInstance.message = 'SUCCESS!! :-)';
-            else
-                messageBox.componentInstance.message = 'ERROR!! : -(';
+            }
         });
     }
+    //Manejo Registrar
+
 
     onReset() {
         this.submitted = false;
         this.registerForm.reset();
     }
-    
-    openModalCliente()
-    {
-        this.modalService.open(ClienteConsultaModalComponent, { size: 'lg' })
-            .result.then((cliente) => this.actualizar(cliente));
-    }
-
-    actualizar(cliente: ClienteViewModel) {
-        
-        this.registerForm.controls['clienteId'].setValue(cliente.nombreCompleto);
 
 
-    }
 
 }
 

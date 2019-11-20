@@ -11,6 +11,7 @@ using NgNetCore.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NgNetCore.Config.Seguridad;
 
 namespace NgNetCore
 {
@@ -31,15 +32,20 @@ namespace NgNetCore
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+                .AddProfileService<ProfileService>(); 
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IConfigSeguridad, ConfigSeguridad>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -48,8 +54,10 @@ namespace NgNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfigSeguridad configSeguridad)
         {
+            configSeguridad.InicializarAsync();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

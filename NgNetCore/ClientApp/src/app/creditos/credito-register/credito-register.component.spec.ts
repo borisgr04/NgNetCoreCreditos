@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreditoRegisterComponent } from './register.component';
+import { CreditoRegisterComponent } from './credito-register.component';
 
 describe('RegisterComponent', () => {
   let component: CreditoRegisterComponent;

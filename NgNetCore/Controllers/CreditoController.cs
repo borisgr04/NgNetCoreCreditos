@@ -12,6 +12,7 @@ using NgNetCore.ViewModels;
 namespace NgNetCore.Controllers
 {
     //[Authorize]
+    //[Authorize("nombreRol")]
     [Route("api/[controller]")]
     [ApiController]
     public class CreditoController : ControllerBase
@@ -25,6 +26,16 @@ namespace NgNetCore.Controllers
         [HttpPost]
         public IActionResult Post(ClienteRegisterViewModel request)
         {
+            if (request.ValorCredito < 1000001) //Este valor esta errado intensionalmente para que pueda verse la validación adicional desde el Front
+            {
+                ModelState.AddModelError("Valor Credito", "El valor del crédito debe ser menor a 100000");
+                var problemDetails = new ValidationProblemDetails(ModelState)
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                };
+                return BadRequest(problemDetails);
+            }
+
             var credito = new Credito
             {
                 ClienteId = request.ClienteId,
@@ -32,6 +43,7 @@ namespace NgNetCore.Controllers
                 ValorCredito = request.ValorCredito,
                 Fecha= request.Fecha
             };
+
             int i = 1;
             foreach (var item in request.Cuotas)
             {

@@ -43,7 +43,9 @@ import { FilterPipe } from './filter.pipe';
         { path: '', component: HomeComponent, pathMatch: 'full' },
         { path: 'counter', component: CounterComponent },
         { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-        { path: 'credito-register', component: CreditoRegisterComponent },
+        { path: 'credito-register', component: CreditoRegisterComponent, canActivate: [AuthorizeGuard], data: { role: ['RegistrarCreditosX'] } },
+        { path: 'clientes-consulta', component: ClienteConsultaComponent, canActivate: [AuthorizeGuard] },
+    
     ]),
       NgbModule,
       ReactiveFormsModule

@@ -25,4 +25,12 @@ export class ClienteService {
                 catchError(this.handleErrorService.handleError<ClienteViewModel[]>('Consulta Clientes', null))
             );
     }
+
+    getByIdentificacion(identificacion:string): Observable<ClienteViewModel> {
+        return this.http.get<ClienteViewModel>(this.baseUrl + 'api/Cliente/' + identificacion)
+            .pipe(
+                tap(_ => this.handleErrorService.log('datos enviados')),
+                catchError(this.handleErrorService.handleError<ClienteViewModel>('Consulta de Cliente', null))
+            );
+    }
 }
