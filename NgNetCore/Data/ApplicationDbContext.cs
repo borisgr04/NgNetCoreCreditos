@@ -12,8 +12,8 @@ namespace NgNetCore.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        //public DbSet<Credito> Creditos { get; set; }
-        //public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Credito> Creditos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         
         public ApplicationDbContext(
             DbContextOptions options,

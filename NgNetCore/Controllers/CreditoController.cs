@@ -28,7 +28,7 @@ namespace NgNetCore.Controllers
         {
             if (request.ValorCredito < 1000001) //Este valor esta errado intensionalmente para que pueda verse la validación adicional desde el Front
             {
-                ModelState.AddModelError("Valor Credito", "El valor del crédito debe ser menor a 100000");
+                ModelState.AddModelError("Valor Crédito", "El valor del crédito debe ser menor a $100.000");
                 var problemDetails = new ValidationProblemDetails(ModelState)
                 {
                     Status = StatusCodes.Status400BadRequest,
@@ -56,8 +56,10 @@ namespace NgNetCore.Controllers
                 i++;
                 credito.Cuotas.Add(cuota);
             }
+            
             //_context.Creditos.Add(credito);
             //_context.SaveChanges();
+
             return Ok(request);   
         }
     }
