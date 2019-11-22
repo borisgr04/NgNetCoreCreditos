@@ -36,8 +36,10 @@
           <li *ngIf="(isAuthenticated | async)" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/clientes-consulta']">Consulta de Clientes</a>
           </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/upload-file']">Upload files</a>
+          </li>
         </ul>
-        
       </div>
     </div>
   </nav>

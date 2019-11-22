@@ -19,6 +19,7 @@ import { CreditoRegisterComponent } from './creditos/credito-register/credito-re
 import { ClienteConsultaComponent } from './clientes/consulta/cliente-consulta.component';
 import { ClienteConsultaModalComponent } from './clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
 import { FilterPipe } from './filter.pipe';
+import { UploadComponent } from './upload/upload.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FilterPipe } from './filter.pipe';
     CreditoRegisterComponent,
     ClienteConsultaComponent,
     ClienteConsultaModalComponent,
-    FilterPipe
+    FilterPipe,
+    UploadComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,7 +47,7 @@ import { FilterPipe } from './filter.pipe';
         { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         { path: 'credito-register', component: CreditoRegisterComponent, canActivate: [AuthorizeGuard], data: { role: ['RegistrarCreditosX'] } },
         { path: 'clientes-consulta', component: ClienteConsultaComponent, canActivate: [AuthorizeGuard] },
-    
+        { path: 'upload-file', component: UploadComponent },
     ]),
       NgbModule,
       ReactiveFormsModule
