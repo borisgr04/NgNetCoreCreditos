@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -13,13 +15,16 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 import { AlertModalComponent } from './@base/modals/alert-modal/alert-modal.component';
 import { CreditoRegisterComponent } from './creditos/credito-register/credito-register.component';
 import { ClienteConsultaComponent } from './clientes/consulta/cliente-consulta.component';
 import { ClienteConsultaModalComponent } from './clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
 import { FilterPipe } from './filter.pipe';
 import { UploadComponent } from './upload/upload.component';
+import { ViewDocumentComponent } from './view-document/view-document.component';
+
 
 
 @NgModule({
@@ -34,7 +39,8 @@ import { UploadComponent } from './upload/upload.component';
     ClienteConsultaComponent,
     ClienteConsultaModalComponent,
     FilterPipe,
-    UploadComponent
+    UploadComponent,
+    ViewDocumentComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,9 +54,11 @@ import { UploadComponent } from './upload/upload.component';
         { path: 'credito-register', component: CreditoRegisterComponent, canActivate: [AuthorizeGuard], data: { role: ['RegistrarCreditosX'] } },
         { path: 'clientes-consulta', component: ClienteConsultaComponent, canActivate: [AuthorizeGuard] },
         { path: 'upload-file', component: UploadComponent },
+        { path: 'view-document', component: ViewDocumentComponent }
     ]),
       NgbModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      NgxDocViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
