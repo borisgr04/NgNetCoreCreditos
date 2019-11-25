@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -15,13 +14,10 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 
-
-
 import { AlertModalComponent } from './@base/modals/alert-modal/alert-modal.component';
 import { CreditoRegisterComponent } from './creditos/credito-register/credito-register.component';
 import { ClienteConsultaComponent } from './clientes/consulta/cliente-consulta.component';
 import { ClienteConsultaModalComponent } from './clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
-import { FilterPipe } from './filter.pipe';
 import { UploadComponent } from './upload/upload.component';
 import { ViewDocumentComponent } from './view-document/view-document.component';
 
@@ -38,7 +34,6 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
     CreditoRegisterComponent,
     ClienteConsultaComponent,
     ClienteConsultaModalComponent,
-    FilterPipe,
     UploadComponent,
     ViewDocumentComponent
   ],
@@ -57,8 +52,8 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
         { path: 'view-document', component: ViewDocumentComponent }
     ]),
       NgbModule,
-      ReactiveFormsModule,
-      NgxDocViewerModule
+      ReactiveFormsModule
+      //,NgxDocViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

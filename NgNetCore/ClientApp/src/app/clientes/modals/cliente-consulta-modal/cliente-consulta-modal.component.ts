@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClienteViewModel } from '../../consulta/cliente-consulta.component';
+import { ClienteViewModel } from '../../models/cliente-view-model';
 
 @Component({
     selector: 'app-cliente-consulta-modal',

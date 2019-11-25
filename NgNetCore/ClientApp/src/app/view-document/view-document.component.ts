@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+//import { NgxDocViewerModule } from 'ngx-doc-viewer'; // va en el module
+//"ngx-doc-viewer": "^0.1.24",package json
 @Component({
   selector: 'app-view-document',
   templateUrl: './view-document.component.html',

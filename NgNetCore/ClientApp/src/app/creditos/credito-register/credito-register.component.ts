@@ -3,9 +3,10 @@ import { CreditoService } from '../../services/credito.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteConsultaModalComponent } from '../../clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
-import { ClienteViewModel } from '../../clientes/consulta/cliente-consulta.component';
 import { AlertModalComponent } from '../../@base/modals/alert-modal/alert-modal.component';
 import { ClienteService } from '../../services/cliente.service';
+import { ClienteViewModel } from '../../clientes/models/cliente-view-model';
+import { CreditoRegisterRequest } from '../models/credito-register-request';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { ClienteService } from '../../services/cliente.service';
     styleUrls: ['./credito-register.component.css']
 })
 export class CreditoRegisterComponent implements OnInit {
-    credito: CreditoRegisterViewModel;
+    credito: CreditoRegisterRequest;
     registerForm: FormGroup;
     submitted = false;
 
@@ -24,10 +25,8 @@ export class CreditoRegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private modalService: NgbModal) { }
 
-    //, Validators.email
-
     ngOnInit() {
-        this.credito = new CreditoRegisterViewModel();
+        this.credito = new CreditoRegisterRequest();
         let myDate = new Date();
         this.credito.fecha = myDate;
         this.credito.clienteId = "";
@@ -35,11 +34,12 @@ export class CreditoRegisterComponent implements OnInit {
         this.credito.valorCredito = 0;
         this.registerForm = this.formBuilder.group({
             clienteId: [this.credito.clienteId, Validators.required],
+            clienteNombre: [''],
             fecha: [this.credito.fecha, Validators.required],
             numeroCuotas: [this.credito.numeroCuotas, [Validators.required, , Validators.min(2), Validators.max(12), Validators.pattern("^[0-9]*$")]],
             valorCredito: [this.credito.valorCredito, [Validators.required, Validators.min(100000), Validators.pattern("^[0-9]*$")]],
             observacion: [this.credito.observacion],
-            clienteNombre: [''],
+            
         });
         
     }
@@ -49,8 +49,14 @@ export class CreditoRegisterComponent implements OnInit {
   
     buscarCliente() {
         this.clienteService.getByIdentificacion(this.registerForm.value.clienteId).subscribe(cliente => {
-            this.f['clienteId'].setValue(cliente.identificacion);
-            this.f['clienteNombre'].setValue(cliente.nombreCompleto);
+            if (cliente != null) {
+                this.f['clienteId'].setValue(cliente.identificacion);
+                this.f['clienteNombre'].setValue(cliente.nombreCompleto);
+            }
+            else
+            {
+                this.openModalCliente();
+            }
         });
     }
 
@@ -102,17 +108,3 @@ export class CreditoRegisterComponent implements OnInit {
 
 }
 
-export class CreditoRegisterViewModel {
-    clienteId: string;
-    fecha: Date;
-    numeroCuotas: number;
-    valor: number;
-    valorCredito: number;
-    observacion: string;
-    cuotas: CuotaRegisterViewModel[];
-}
-
-export class CuotaRegisterViewModel {
-    valor: number;
-    fecha: Date;
-}

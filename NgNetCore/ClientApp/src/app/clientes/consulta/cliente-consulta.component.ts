@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
+import { ClienteViewModel } from '../models/cliente-view-model';
 
 @Component({
     selector: 'app-cliente-consulta',
@@ -8,11 +9,19 @@ import { ClienteService } from '../../services/cliente.service';
 })
 export class ClienteConsultaComponent implements OnInit {
 
+    filteredClients: ClienteViewModel[] = [];
+    clientes: ClienteViewModel[];
+
     @Output() seleccionado = new EventEmitter<ClienteViewModel>();
 
-    seleccionar(cliente: ClienteViewModel)
-    {
-        this.seleccionado.emit(cliente);
+    constructor(private clienteService: ClienteService) { }
+
+    ngOnInit() {
+        this.clienteService.get().subscribe(result => {
+            this.clientes = result;
+            this.filteredClients = result;
+            this.listFilter = '';
+        });
     }
 
     _listFilter = '';
@@ -22,24 +31,6 @@ export class ClienteConsultaComponent implements OnInit {
     set listFilter(value: string) {
         this._listFilter = value;
         this.filteredClients = this.listFilter ? this.doFilter(this.listFilter) : this.clientes;
-
-    }
-    filteredClients: ClienteViewModel[] = [];
-    
-    clientes: ClienteViewModel[];
-
-    constructor(private clienteService: ClienteService) {
-        
-    }
-   
-
-    ngOnInit() {
-        this.clienteService.get().subscribe(result =>
-        {
-            this.clientes = result;
-            this.filteredClients = result;
-            this.listFilter = '';
-        });
     }
 
     doFilter(filterBy: string): ClienteViewModel[] {
@@ -50,11 +41,8 @@ export class ClienteConsultaComponent implements OnInit {
             cliente.telefono.toLocaleLowerCase().indexOf(filterBy) !== -1
         );
     }
-}
 
-export class ClienteViewModel {
-    identificacion: string;
-    email: string;
-    telefono: string;
-    nombreCompleto: string;
+    seleccionar(cliente: ClienteViewModel) {
+        this.seleccionado.emit(cliente);
+    }
 }

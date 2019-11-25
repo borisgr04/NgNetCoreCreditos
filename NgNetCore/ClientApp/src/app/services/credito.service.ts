@@ -3,8 +3,7 @@ import { HandleErrorService } from '../@base/services/handle-error.service';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CreditoRegisterViewModel } from '../creditos/credito-register/credito-register.component';
-
+import { CreditoRegisterRequest } from '../creditos/models/credito-register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +18,11 @@ export class CreditoService {
         this.baseUrl = baseUrl;
     }
 
-    post(credito: CreditoRegisterViewModel): Observable<CreditoRegisterViewModel> {
-        return this.http.post<CreditoRegisterViewModel>(this.baseUrl + 'api/Credito', credito)
+    post(credito: CreditoRegisterRequest): Observable<CreditoRegisterRequest> {
+        return this.http.post<CreditoRegisterRequest>(this.baseUrl + 'api/Credito', credito)
             .pipe(
                 tap(_ => this.handleErrorService.log('datos enviados')),
-                catchError(this.handleErrorService.handleError<CreditoRegisterViewModel>('REGISTRAR RUBRO', null))
+                catchError(this.handleErrorService.handleError<CreditoRegisterRequest>('REGISTRAR RUBRO', null))
             );
     }
 }

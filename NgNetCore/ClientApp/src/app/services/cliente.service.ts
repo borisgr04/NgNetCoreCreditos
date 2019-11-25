@@ -3,7 +3,7 @@ import { HandleErrorService } from '../@base/services/handle-error.service';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ClienteViewModel } from '../clientes/consulta/cliente-consulta.component';
+import { ClienteViewModel } from '../clientes/models/cliente-view-model';
 
 @Injectable({
   providedIn: 'root'
