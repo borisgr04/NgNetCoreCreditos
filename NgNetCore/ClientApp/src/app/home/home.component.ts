@@ -12,7 +12,6 @@ export class HomeComponent {
 
     login()
     {
-        alert('111');
         this.authService.login('boris', '123456');
     }
 

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-    constructor() {
+    constructor(private _router: Router) {
         
     }
 
@@ -15,16 +16,16 @@ export class AuthService {
         //se podría encriptar el nombre de la variable
         sessionStorage.setItem('user', user);
         sessionStorage.setItem('roles', JSON.stringify(['admin']));
-        alert('registrado');
+        
+        //this._router.navigate(['/login']);
     }
 
     logout() {
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('roles');
+        sessionStorage.clear();
+        //this._router.navigate(['/login']);
     }
 
     isAuthenticated(): boolean {
-
         return sessionStorage.getItem('user')!=null;
     }
 
@@ -35,6 +36,6 @@ export class AuthService {
     }
 
     getUserName(): string {
-        return localStorage.getItem('user') != null ? localStorage.getItem('user'):'Anonimo';
+        return sessionStorage.getItem('user') != null ? sessionStorage.getItem('user'):'Anonimo';
     }
 }
