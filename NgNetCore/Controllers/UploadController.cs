@@ -41,7 +41,7 @@ namespace NgNetCore.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -69,7 +69,7 @@ namespace NgNetCore.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -96,7 +96,7 @@ namespace NgNetCore.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -122,7 +122,7 @@ namespace NgNetCore.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 return StatusCode(500, "Internal server error");
             }

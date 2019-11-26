@@ -24,17 +24,10 @@
               [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
-          </li>
-          <!--*ngIf="isAuthenticatedRole('RegistrarCreditos')"-->
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="isAuthenticated" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/credito-register']">Registro de Créditos</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="isAuthenticatedRole('admin')" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/clientes-consulta']">Consulta de Clientes</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
@@ -43,8 +36,26 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/view-document']">Ver Docs</a>
           </li>
-
         </ul>
+
+          <ul class="navbar-nav" *ngIf="isAuthenticated ">
+            <li class="nav-item">
+              <a class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav" *ngIf="!isAuthenticated">
+            <li class="nav-item">
+              <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
+            </li>
+          </ul>
+
+        
       </div>
     </div>
   </nav>

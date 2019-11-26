@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthorizeService } from '../../api-authorization/authorize.service';
-import { map } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-nav-menu',
@@ -20,26 +18,20 @@ export class NavMenuComponent {
         this.isExpanded = !this.isExpanded;
     }
 
-    public isAuthenticated: Observable<boolean>;
-    public userName: Observable<string>;
-    public role: any;
-
-    constructor(private authorizeService: AuthorizeService) { }
+    public isAuthenticated: boolean;
+    public userName: string;
+    
+    constructor(private authorizeService: AuthService) { }
 
     ngOnInit() {
         this.isAuthenticated = this.authorizeService.isAuthenticated();
-        this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
-        this.authorizeService.getUser().subscribe(user => {
-            if (user) {
-                this.role = user.role;
-            }
-        }
-        );
+        this.userName = this.authorizeService.getUserName();
     }
 
     isAuthenticatedRole(role: string): boolean {
-        if (role != null && this.role != null) {
-            return this.role.indexOf(role) >= 0;
+        
+        if (this.isAuthenticated && role != null ) {
+            return this.authorizeService.hasRole(role);
         }
     }
 
