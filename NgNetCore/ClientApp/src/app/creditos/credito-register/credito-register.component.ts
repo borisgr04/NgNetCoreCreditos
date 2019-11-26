@@ -86,8 +86,6 @@ export class CreditoRegisterComponent implements OnInit {
     create() {
         this.credito = this.registerForm.value;
 
-        alert(JSON.stringify(this.credito));
-
         this.creditoService.post(this.credito).subscribe(c => {
             if (c != null) {
                 const messageBox = this.modalService.open(AlertModalComponent)
