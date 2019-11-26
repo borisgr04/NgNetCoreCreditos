@@ -43,14 +43,17 @@ namespace NgNetCore.Config.Seguridad
             }
             foreach (var item in roles)
             {
-                var identityResult = await _roleManager.CreateAsync(new IdentityRole() { Name = item });
-                var isAdminInRole = await _userManager.IsInRoleAsync(userAdmin, item);
-                if (!isAdminInRole)
+                if (!await _roleManager.RoleExistsAsync(item)) 
                 {
-                    var result= await _userManager.AddToRoleAsync(userAdmin, item);
-                    if (!result.Succeeded)
+                    var identityResult = await _roleManager.CreateAsync(new IdentityRole() { Name = item });
+                    var isAdminInRole = await _userManager.IsInRoleAsync(userAdmin, item);
+                    if (!isAdminInRole)
                     {
-                        throw new Exception($"Error creando usuario Role {item}");
+                        var result = await _userManager.AddToRoleAsync(userAdmin, item);
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception($"Error creando usuario Role {item}");
+                        }
                     }
                 }
             }

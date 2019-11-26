@@ -8,10 +8,8 @@ import { ClienteViewModel } from '../models/cliente-view-model';
     styleUrls: ['./cliente-consulta.component.css']
 })
 export class ClienteConsultaComponent implements OnInit {
-
-    filteredClients: ClienteViewModel[] = [];
     clientes: ClienteViewModel[];
-
+    searchText: string;
     @Output() seleccionado = new EventEmitter<ClienteViewModel>();
 
     constructor(private clienteService: ClienteService) { }
@@ -19,27 +17,8 @@ export class ClienteConsultaComponent implements OnInit {
     ngOnInit() {
         this.clienteService.get().subscribe(result => {
             this.clientes = result;
-            this.filteredClients = result;
-            this.listFilter = '';
+            this.searchText = '';
         });
-    }
-
-    _listFilter = '';
-    get listFilter(): string {
-        return this._listFilter;
-    }
-    set listFilter(value: string) {
-        this._listFilter = value;
-        this.filteredClients = this.listFilter ? this.doFilter(this.listFilter) : this.clientes;
-    }
-
-    doFilter(filterBy: string): ClienteViewModel[] {
-        filterBy = filterBy.toLocaleLowerCase();
-        return this.clientes.filter(cliente =>
-            cliente.nombreCompleto.toLocaleLowerCase().indexOf(filterBy) !== -1
-            ||
-            cliente.telefono.toLocaleLowerCase().indexOf(filterBy) !== -1
-        );
     }
 
     seleccionar(cliente: ClienteViewModel) {

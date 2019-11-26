@@ -20,6 +20,7 @@ import { ClienteConsultaComponent } from './clientes/consulta/cliente-consulta.c
 import { ClienteConsultaModalComponent } from './clientes/modals/cliente-consulta-modal/cliente-consulta-modal.component';
 import { UploadComponent } from './upload/upload.component';
 import { ViewDocumentComponent } from './view-document/view-document.component';
+import { FiltroClientePipe } from './pipes/filtro-cliente.pipe';
 
 
 
@@ -35,7 +36,8 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
     ClienteConsultaComponent,
     ClienteConsultaModalComponent,
     UploadComponent,
-    ViewDocumentComponent
+    ViewDocumentComponent,
+    FiltroClientePipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,15 +47,14 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
     RouterModule.forRoot([
         { path: '', component: HomeComponent, pathMatch: 'full' },
         { path: 'counter', component: CounterComponent },
-        { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-        { path: 'credito-register', component: CreditoRegisterComponent, canActivate: [AuthorizeGuard], data: { role: ['RegistrarCreditosX'] } },
-        { path: 'clientes-consulta', component: ClienteConsultaComponent, canActivate: [AuthorizeGuard] },
+        { path: 'fetch-data', component: FetchDataComponent },
+        { path: 'credito-register', component: CreditoRegisterComponent },
+        { path: 'clientes-consulta', component: ClienteConsultaComponent},
         { path: 'upload-file', component: UploadComponent },
         { path: 'view-document', component: ViewDocumentComponent }
     ]),
       NgbModule,
       ReactiveFormsModule
-      //,NgxDocViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
@@ -66,3 +67,6 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
     ]
 })
 export class AppModule { }
+
+////,NgxDocViewerModule
+//, canActivate: [AuthorizeGuard], data: { role: ['RegistrarCreditosX'] }

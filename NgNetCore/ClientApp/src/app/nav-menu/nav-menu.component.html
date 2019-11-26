@@ -17,7 +17,7 @@
       </button>
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
            [ngClass]="{ show: isExpanded }">
-        <app-login-menu></app-login-menu>
+        <!--<app-login-menu></app-login-menu>-->
         <ul class="navbar-nav flex-grow">
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
@@ -30,10 +30,11 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
           </li>
-          <li *ngIf="isAuthenticatedRole('RegistrarCreditos')" class="nav-item" [routerLinkActive]="['link-active']">
+          <!--*ngIf="isAuthenticatedRole('RegistrarCreditos')"-->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/credito-register']">Registro de Créditos</a>
           </li>
-          <li *ngIf="(isAuthenticated | async)" class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/clientes-consulta']">Consulta de Clientes</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
@@ -42,7 +43,7 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/view-document']">Ver Docs</a>
           </li>
-          
+
         </ul>
       </div>
     </div>

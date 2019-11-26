@@ -40,7 +40,7 @@ namespace NgNetCore
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-                .AddProfileService<ProfileService>(); 
+                .AddProfileService<ProfileService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -83,7 +83,8 @@ namespace NgNetCore
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
+            //app.UseIdentityServer();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

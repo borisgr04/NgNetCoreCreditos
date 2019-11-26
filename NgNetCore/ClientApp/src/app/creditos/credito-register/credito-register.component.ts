@@ -96,8 +96,6 @@ export class CreditoRegisterComponent implements OnInit {
             }
         });
     }
-    //Manejo Registrar
-
 
     onReset() {
         this.submitted = false;
