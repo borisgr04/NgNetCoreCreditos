@@ -20,15 +20,15 @@
 
 
         <!--<app-login-menu></app-login-menu>-->
-        <ul class="navbar-nav" *ngIf="isAuthenticated ">
+        <ul class="navbar-nav" *ngIf="isAuthenticated()">
           <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName }}</a>
+            <a class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName() }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
           </li>
         </ul>
-        <ul class="navbar-nav" *ngIf="!isAuthenticated">
+        <ul class="navbar-nav" *ngIf="!isAuthenticated()">
           <li class="nav-item">
             <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
           </li>

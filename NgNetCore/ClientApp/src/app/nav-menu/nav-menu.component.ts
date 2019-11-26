@@ -18,14 +18,16 @@ export class NavMenuComponent {
         this.isExpanded = !this.isExpanded;
     }
 
-    public isAuthenticated: boolean;
-    public userName: string;
     
     constructor(private authorizeService: AuthService) { }
 
-    ngOnInit() {
-        this.isAuthenticated = this.authorizeService.isAuthenticated();
-        this.userName = this.authorizeService.getUserName();
+    userName(): string {
+        return this.authorizeService.getUserName();
+    }
+
+    public isAuthenticated(): boolean
+    {
+        return this.authorizeService.isAuthenticated();
     }
 
     isAuthenticatedRole(role: string): boolean {
