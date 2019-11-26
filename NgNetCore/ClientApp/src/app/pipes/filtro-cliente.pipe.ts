@@ -8,9 +8,9 @@ export class FiltroClientePipe implements PipeTransform {
     transform(clientes: ClienteViewModel[], searchText: string) {
         if (searchText == null) return clientes;
         return clientes.filter(cliente =>
-            cliente.nombreCompleto.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1
+            cliente.nombreCompleto.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
             ||
-            cliente.telefono.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1
+            cliente.telefono.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
         );
     }
   
