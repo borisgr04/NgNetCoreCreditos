@@ -11,8 +11,6 @@ using NgNetCore.ViewModels;
 
 namespace NgNetCore.Controllers
 {
-    //[Authorize]
-    //[Authorize("nombreRol")]
     [Route("api/[controller]")]
     [ApiController]
     public class CreditoController : ControllerBase
@@ -24,8 +22,9 @@ namespace NgNetCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(ClienteRegisterViewModel request)
+        public IActionResult Post(ClienteRegisterRequest request)
         {
+            
             if (request.ValorCredito < 1000001) //Este valor esta errado intensionalmente para que pueda verse la validación adicional desde el Front
             {
                 ModelState.AddModelError("Valor Crédito", "El valor del crédito debe ser menor a $100.000");
@@ -43,20 +42,19 @@ namespace NgNetCore.Controllers
                 ValorCredito = request.ValorCredito,
                 Fecha= request.Fecha
             };
-
-            int i = 1;
-            foreach (var item in request.Cuotas)
+            var fecha = request.Fecha;
+            for (int i=0; i< request.NumeroCuotas; i++)
             {
+                fecha = fecha.AddMonths(1);
                 var cuota = new Cuota()
                 {
                     NumeroCuota = i,
-                    Fecha = item.Fecha,
-                    ValorCuota = item.ValorCuota
+                    Fecha = fecha,
+                    ValorCuota = request.ValorCredito/ request.NumeroCuotas
                 };
-                i++;
                 credito.Cuotas.Add(cuota);
             }
-            
+            //por manejo de la complejidad no estan try-catch pero deben ir
             //_context.Creditos.Add(credito);
             //_context.SaveChanges();
 

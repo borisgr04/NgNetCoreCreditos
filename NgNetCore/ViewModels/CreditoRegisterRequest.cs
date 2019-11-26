@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NgNetCore.ViewModels
 {
-    public class ClienteRegisterViewModel
+    public class ClienteRegisterRequest
     {
         [Required]
         public string ClienteId { get; set; }
@@ -19,12 +19,6 @@ namespace NgNetCore.ViewModels
 
         [Required]
         public string Observacion { get; set; }
-        public List<CuotaRegisterViewModel> Cuotas { get; set; } = new List<CuotaRegisterViewModel>();
     }
 
-    public class CuotaRegisterViewModel
-    {
-        public DateTime Fecha { get; set; }
-        public decimal ValorCuota { get; set; }
-    }
 }
