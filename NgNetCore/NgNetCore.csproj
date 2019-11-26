@@ -34,9 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Images\1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Remove="Resources\Images\ejemplo" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Resources\Images\ejemplo" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
