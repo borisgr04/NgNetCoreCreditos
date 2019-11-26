@@ -41,9 +41,9 @@ import { AuthGuard } from './guards/auth-guard';
     RouterModule.forRoot([
         { path: '', component: HomeComponent, pathMatch: 'full' },
         { path: 'credito-register', component: CreditoRegisterComponent },
-        { path: 'clientes-consulta', component: ClienteConsultaComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+        { path: 'clientes-consulta', component: ClienteConsultaComponent },
         { path: 'upload-file', component: UploadComponent },
-        { path: 'view-document', component: ViewDocumentComponent }
+        { path: 'view-document', component: ViewDocumentComponent, canActivate: [AuthGuard], data: { role: 'admin' } }
     ]),
       NgbModule,
       ReactiveFormsModule
