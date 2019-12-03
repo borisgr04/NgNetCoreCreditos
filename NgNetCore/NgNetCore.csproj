@@ -24,6 +24,8 @@
     <PackageReference Include="jsreport.AspNetCore" Version="2.0.2" />
     <PackageReference Include="jsreport.Local" Version="2.1.2" />
     <PackageReference Include="jsreport.Binary" Version="2.6.1" />
+
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
   <ItemGroup>
