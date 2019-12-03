@@ -11,6 +11,9 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace NgNetCore
 {
@@ -33,6 +36,24 @@ namespace NgNetCore
             services.AddControllers();
 
             #region
+            var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             #endregion
 
@@ -105,6 +126,7 @@ namespace NgNetCore
                 }
             );
             #endregion
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
