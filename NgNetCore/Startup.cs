@@ -14,6 +14,7 @@ using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using NgNetCore.Models.InicializarDatos;
 
 namespace NgNetCore
 {
@@ -29,10 +30,12 @@ namespace NgNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("DefaultConnection"));*/
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
 
             #region
@@ -94,10 +97,13 @@ namespace NgNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
+                var inicializar = new InicializarDatos(context);
+                inicializar.InicializarCliente();
+
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }

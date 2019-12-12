@@ -10,6 +10,8 @@ namespace NgNetCore.Data
         {
         }
         public DbSet<Credito> Creditos { get; set; }
+
+        public DbSet<Cuota> Cuotas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         
       

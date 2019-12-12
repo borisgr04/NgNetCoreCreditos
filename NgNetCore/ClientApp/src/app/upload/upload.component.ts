@@ -26,7 +26,7 @@ export class UploadComponent implements OnInit {
         private handleErrorService: HandleErrorService
     ) {
         this.baseUrl = baseUrl;
-        alert(this.baseUrl);
+   
     }
 
     ngOnInit() {
