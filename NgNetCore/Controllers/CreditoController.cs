@@ -46,7 +46,7 @@ namespace NgNetCore.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("Guardando Datos", "Se presento un inconveniente guardando los datos: " + ex.Message);
+                ModelState.AddModelError("Guardando Datos", "Se presentó un inconveniente guardando los datos: " + ex.Message);
                 var problemDetails = new ValidationProblemDetails(ModelState)
                 {
                     Status = StatusCodes.Status400BadRequest,
