@@ -17,7 +17,7 @@ node {
   }
 
   stage('Publish') {
-    bat 'dotnet publish NgNetCore/NgNetCore.csproj -c Release -o G:\ws\NetCore\Creditos'
+    bat 'dotnet publish NgNetCore/NgNetCore.csproj -c Release -o G:/ws/NetCore/Creditos'
   }
   
   stage('Report Email') {
