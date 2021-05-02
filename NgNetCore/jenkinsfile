@@ -36,7 +36,7 @@ pipeline {
         always { 
             echo 'Siempre notifica!'
 	   
-            hangoutsNotify message: "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
+            hangoutsNotify message: "$ Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
         }
         aborted {
             echo 'I was aborted'
