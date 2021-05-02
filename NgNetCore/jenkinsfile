@@ -1,49 +1,33 @@
 pipeline {
     agent any
     stages {
-        stage('Send Email') {
-            steps {
-node {
-
-  stage('Checkout') {
-	   git url: 'https://github.com/borisgr04/NgNetCoreCreditos.git',branch: 'master'
-  }
-
- stage ('Restore Nuget') {
-    bat "dotnet restore NgNetCore/NgNetCore.csproj"
-  }
-  
-  stage('Clean') {
-    bat 'dotnet clean NgNetCore/NgNetCore.csproj'
-  }
-  
-  stage('Build') {
-    bat 'dotnet build NgNetCore/NgNetCore.csproj --configuration Release'
-  }
-
-  stage('Publish') {
-    bat 'dotnet publish NgNetCore/NgNetCore.csproj -c Release -o G:/ws/NetCore/Creditos'
-  }
-  
-  stage('Report Email') {
-      emailext body: 'Se terminó de desplegar', subject: 'NetNgCreditos - Se terminó de desplegar', to: 'abolano@byasystems.com.co'
-  }
-  post {
-     
-  }
-  
-}
- }
-        }
+    stage('Checkout') {
+	       git url: 'https://github.com/borisgr04/NgNetCoreCreditos.git',branch: 'master'
+       }
+    stage ('Restore Nuget') {
+        bat "dotnet restore NgNetCore/NgNetCore.csproj"
+     }
+    stage('Clean') {
+        bat 'dotnet clean NgNetCore/NgNetCore.csproj'
     }
-    post { 
+    stage('Build') {
+        bat 'dotnet build NgNetCore/NgNetCore.csproj --configuration Release'
+    }
+    stage('Publish') {
+        bat 'dotnet publish NgNetCore/NgNetCore.csproj -c Release -o G:/ws/NetCore/Creditos'
+    }
+    stage('Report Email') {
+      emailext body: 'Se terminó de desplegar', subject: 'NetNgCreditos - Se terminó de desplegar', to: 'abolano@byasystems.com.co'
+    }
+  }
+  post { 
         always { 
             echo 'I will always say Hello!'
-	    hangoutsNotify message: "This message is from a pipeline!",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
+            hangoutsNotify message: "This message is from a pipeline!",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
         }
         aborted {
             echo 'I was aborted'
-	    hangoutsNotify message: "This message is from a pipeline!",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
+            hangoutsNotify message: "This message is from a pipeline!",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
         }
         failure {
             mail to: 'aa@bb.cc',
