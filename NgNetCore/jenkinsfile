@@ -34,13 +34,9 @@ pipeline {
   }
   post { 
         always { 
-            echo 'I will always say Hello!'
-	     
-	    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  	    def summary = "${subject} (${env.BUILD_URL})"
-            def details = """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p> <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
-	     
-            hangoutsNotify message: "",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
+            echo 'Siempre notifica!'
+	   
+            hangoutsNotify message: "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
         }
         aborted {
             echo 'I was aborted'
