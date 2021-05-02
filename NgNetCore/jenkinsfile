@@ -19,7 +19,7 @@ pipeline {
     stage('Build') {
          steps {
         bat 'dotnet build NgNetCore/NgNetCore.csproj --configuration Release'
-         steps {
+         }
     }
     stage('Publish') {
          steps {
