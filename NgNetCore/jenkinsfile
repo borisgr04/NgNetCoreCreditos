@@ -23,5 +23,8 @@ node {
   stage('Report Email') {
       emailext body: 'Se terminó de desplegar', subject: 'NetNgCreditos - Se terminó de desplegar', to: 'abolano@byasystems.com.co'
   }
+  post {
+     hangoutsNotify message: "This message is from a pipeline!",token: "Sr0GyZyk3uqhzJMuLfecED76_",threadByJob: false
+  }
   
 }
